@@ -2,8 +2,11 @@ package com.example.service;
 
 import com.example.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: weizujie
@@ -18,7 +21,9 @@ public interface IUserService {
 
     User login(User user);
 
-    void register(User user);
+    void addUser(User user);
 
+    User findById(Integer id);
 
+    void updateAvatar(Integer id, String avatar);
 }

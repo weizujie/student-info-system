@@ -2,8 +2,11 @@ package com.example.mapper;
 
 import com.example.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: weizujie
@@ -16,9 +19,14 @@ public interface UserMapper {
 
     User findByUsername(@Param("username") String username);
 
+    User findById(@Param("id") Integer id);
+
     User login(User user);
 
-    void register(User user);
+    void addUser(User user);
+
+    void updateAvatar(@Param("id") Integer id, @Param("avatar") String avatar);
+
 
 
 }

@@ -6,7 +6,7 @@
 
     <!-- 查询所有用户 -->
     <select id="findAll" resultType="com.example.entity.User">
-        select * from t_user
+        select id, username, password,email, mobile, avatar from t_user
     </select>
 
     <!-- 用户登录 -->
@@ -19,20 +19,32 @@
         select id, username, email, mobile, avatar from t_user where username = #{username}
     </select>
 
+    <!-- 根据id查询用户 -->
+    <select id="findById" resultType="com.example.entity.User">
+        select id, username, email, mobile, avatar from t_user where id = #{id}
+    </select>
+
+    <!-- 更新用户头像 -->
+    <update id="updateAvatar">
+        update t_user set avatar = #{avatar} where id = #{id}
+    </update>
+
     <!-- 用户注册 -->
-    <insert id="register">
+    <insert id="addUser">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username">username,</if>
             <if test="password">password,</if>
             <if test="email != null">email,</if>
             <if test="mobile != null">mobile</if>
+            <if test="avatar != null">avatar</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="username">#{username},</if>
             <if test="password">#{password},</if>
             <if test="email != null">#{email},</if>
-            <if test="mobile != null">#{mobile}</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="avatar != null">#{avatar}</if>
         </trim>
     </insert>
 

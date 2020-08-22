@@ -9,8 +9,22 @@ spring:
     password: toor
     type: com.alibaba.druid.pool.DruidDataSource
 
+    # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
+    servlet:
+      multipart:
+        max-file-size: 5MB
+        max-request-size: 5MB
+
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+file:
+  staticAccessPath: /static/images/**
+  uploadFolder: D:/uploadFiles/
+
+
+

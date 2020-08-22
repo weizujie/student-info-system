@@ -4,9 +4,16 @@ import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sun.nio.cs.ext.MacArabic;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +24,11 @@ import java.util.Map;
  */
 @Service
 public class UserServiceImpl implements IUserService {
+
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
 
     @Autowired
     private UserMapper userMapper;
@@ -36,11 +48,21 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void register(User user) {
+    public void addUser(User user) {
         if (userMapper.findByUsername(user.getUsername()) != null) {
             throw new RuntimeException("该用户名已存在，请重新输入");
         }
-        userMapper.register(user);
+        userMapper.addUser(user);
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
+    public void updateAvatar(Integer id, String avatar) {
+        userMapper.updateAvatar(id, avatar);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Map;
  * @Date: 2020/8/21
  * @Github: https://github.com/weizujie
  */
-public class JWTUtils {
+public class JWTUtil {
 
     private static final String SING = "!Q@W3e4R%^&";
 

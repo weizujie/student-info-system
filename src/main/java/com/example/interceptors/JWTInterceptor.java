@@ -3,13 +3,12 @@ package com.example.interceptors;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.utils.JWTUtils;
+import com.example.utils.JWTUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class JWTInterceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
         try {
             // 验证令牌
-            JWTUtils.verify(token);
+            JWTUtil.verify(token);
             // 验证成功后放行请求
             return true;
         } catch (SignatureVerificationException e) {
