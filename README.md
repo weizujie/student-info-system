@@ -71,13 +71,139 @@
 
 ```json
 {
-    "msg": "登录成功",
-    "mobile": "123123123",
-    "id": "10",
-    "avatar": "https://cdn.jsdelivr.net/gh/weizujie/weizujie.github.io@latest/images/avatar.jpg",
-    "email": "byojiaoxianz7@gmail.com",
-    "username": "123",
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEwIiwiZXhwIjoxNTk4NTk0MDQzLCJ1c2VybmFtZSI6IjEyMyJ9.gB9kgUO8aD5J4msTL-Dfb7B2f7NNHI2rdE9R_djVXmg",
-    "status": 200
+    "data": {
+        "id": "1",
+        "username": "weizujie",
+        "email": "123@qq.com",
+        "mobile": "123123123",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJleHAiOjE1OTg2ODA5OTEsInVzZXJuYW1lIjoid2VpenVqaWUifQ.qtN1pmICU9bH34QKBF_xTP7WUvqKCwXAEE_6AQqkY94"
+    },
+    "meta": {
+        "status": 200,
+        "msg": "登录成功"
+    }
+}
+```
+
+## 1.3. 用户管理
+
+### 1.3.1. 用户数据列表
+
+- 请求路径：users
+- 请求方法：get
+- 请求参数
+
+| 参数名   | 参数说明     | 备注     |
+| -------- | ------------ | -------- |
+| pageNum  | 当前页码     | 不能为空 |
+| pageSize | 每页显示条数 | 可以为空 |
+
+- 响应参数
+
+| 参数名    | 参数说明     | 备注 |
+| --------- | ------------ | ---- |
+| totalpage | 总记录数     |      |
+| pagenum   | 当前页码     |      |
+| users     | 用户数据集合 |      |
+
+- 响应数据
+
+```json
+{
+    "data": {
+        "totalpage": 2,
+        "pagenum": 1,
+        "users": [
+            {
+                "id": 1,
+                "username": "weizujie",
+                "password": "weizujie",
+                "email": "123@qq.com",
+                "mobile": "123123123",
+                "avatar": "https://cdn.jsdelivr.net/gh/weizujie/weizujie.github.io@latest/images/avatar.jpg"
+            },
+            {
+                "id": 34,
+                "username": "123123",
+                "password": "123123",
+                "email": null,
+                "mobile": null,
+                "avatar": "https://cdn.jsdelivr.net/gh/weizujie/weizujie.github.io@latest/images/avatar.jpg"
+            }
+        ],
+        "meta": {
+            "msg": "获取成功",
+            "status": 200
+        }
+    }
+}
+```
+
+### 1.3.2. 添加用户
+
+- 请求路径：addUser
+- 请求方法：post
+- 请求参数
+
+| 参数名   | 参数说明 | 备注     |
+| -------- | -------- | -------- |
+| username | 用户名称 | 不能为空 |
+| password | 用户密码 | 不能为空 |
+| email    | 邮箱     | 可以为空 |
+| mobile   | 手机号   | 可以为空 |
+| avatar   | 头像     | 默认，可以更改 |
+
+- 响应参数
+
+| 参数名   | 参数说明    | 备注 |
+| -------- | ----------- | ---- |
+| id       | 用户 ID     |      |
+| username | 用户名      |      |
+| mobile   | 手机号      |      |
+| email    | 邮箱        |      |
+| avatar   | 头像        |       |
+
+- 响应数据
+
+```json
+{
+    "data": {
+        "id": "35",
+        "username": "test",
+        "email": "123123@qq.com",
+        "mobile": "123123",
+        "avatar": "https://cdn.jsdelivr.net/gh/weizujie/weizujie.github.io@latest/images/avatar.jpg"
+    },
+    "meta": {
+        "status": 201,
+        "msg": "用户创建成功"
+    }
+}
+```
+
+### 1.3.3 更改头像
+
+- 请求路径：updateAvatar
+- 请求方法：post
+- 请求参数
+
+| 参数名   | 参数说明    | 备注 |
+| -------- | ----------- | ---- |
+| token   |             |      |
+| file     | 头像        |      |
+
+- 响应参数
+
+| 参数名   | 参数说明    | 备注 |
+| -------- | ----------- | ---- |
+| path       | 头像地址     |      |
+
+- 响应数据
+
+```json
+{
+    "code": 200,
+    "msg": "上传成功",
+    "path": "http://localhost:8888/static/images/1598076017177.jpg"
 }
 ```
