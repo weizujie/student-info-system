@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -34,8 +35,8 @@ public class Scholarism {
     // 论文编号
     private String paperNumber;
     // 申请时间(选填)
-    private Date applicationTime;
+    private String applicationTime;
     // 发表时间(选填)
-    private Date postedTime;
+    private String postedTime;
 
 }

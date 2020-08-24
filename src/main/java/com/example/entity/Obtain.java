@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -35,5 +36,5 @@ public class Obtain {
     // 年级
     private String grade;
     // 获奖时间
-    private Date obtainTime;
+    private String obtainTime;
 }

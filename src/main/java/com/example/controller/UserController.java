@@ -84,10 +84,7 @@ public class UserController {
         Map<String, Object> meta = new LinkedHashMap<>();
         try {
             User dbUser = userService.findById(id);
-            data.put("id", dbUser.getId());
-            data.put("username", dbUser.getUsername());
-            data.put("email", dbUser.getEmail());
-            data.put("mobile", dbUser.getMobile());
+            data.put("users", dbUser);
             meta.put("code", 200);
             meta.put("msg", "查询成功");
             result.put("data", data);
@@ -157,7 +154,7 @@ public class UserController {
     }
 
     /**
-     * 更新用户
+     * 更新指定id用户信息
      *
      * @param user
      * @return
@@ -183,7 +180,7 @@ public class UserController {
     }
 
     /**
-     * 更新头像
+     * 更新当前登录用户的头像
      *
      * @param file
      * @return
@@ -198,7 +195,6 @@ public class UserController {
         }
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
-
         String originalFilename = file.getOriginalFilename();
         String fileName = System.currentTimeMillis() + "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String filePath = uploadFolder;
@@ -210,7 +206,7 @@ public class UserController {
             file.transferTo(dest);
             // 获取当前登录用户
             Integer currentUserId = Integer.valueOf(request.getSession().getAttribute("currentUserId").toString());
-            System.out.println("=================:" + currentUserId);
+            log.info("currentUserId" + currentUserId);
             // 根据id查询用户
             User result = userService.findById(currentUserId);
             // 更新头像
@@ -227,5 +223,5 @@ public class UserController {
         }
         return map;
     }
-    
+
 }
