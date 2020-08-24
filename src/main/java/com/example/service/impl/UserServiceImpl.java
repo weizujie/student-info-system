@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户管理实现类
+ *
  * @Author: weizujie
  * @Date: 2020/8/20
  * @Github: https://github.com/weizujie
@@ -64,6 +66,17 @@ public class UserServiceImpl implements IUserService {
     public void updateAvatar(Integer id, String avatar) {
         userMapper.updateAvatar(id, avatar);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        userMapper.deleteById(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
 
     @Override
     public User findByUsername(String username) {

@@ -29,14 +29,14 @@
         update t_user set avatar = #{avatar} where id = #{id}
     </update>
 
-    <!-- 用户注册 -->
+    <!-- 用户添加 -->
     <insert id="addUser">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username">username,</if>
             <if test="password">password,</if>
             <if test="email != null">email,</if>
-            <if test="mobile != null">mobile</if>
+            <if test="mobile != null">mobile,</if>
             <if test="avatar != null">avatar</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -48,5 +48,20 @@
         </trim>
     </insert>
 
+    <!-- 根据id删除用户 -->
+    <delete id="deleteById">
+         delete from t_user where id = #{id}
+    </delete>
+
+    <!-- 根据id更新用户 -->
+    <update id="updateUser" parameterType="com.example.entity.User">
+        update t_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="password != null">password = #{password}</if>
+        </trim>
+        where id = #{id}
+    </update>
 
 </mapper>

@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Map;
 
 /**
+ * JWT 工具类
+ *
  * @Author: weizujie
  * @Date: 2020/8/21
  * @Github: https://github.com/weizujie
@@ -34,7 +36,7 @@ public class JWTUtil {
             builder.withClaim(k, v);
         });
 
-        String token = builder.withExpiresAt(instance.getTime())  // 指定令牌过期时间
+        String token = builder.withExpiresAt(instance.getTime())  // 指定token过期时间
                 .sign(Algorithm.HMAC256(SING)); // sing
 
         return token;
@@ -48,6 +50,4 @@ public class JWTUtil {
     public static DecodedJWT verify(String token) {
         return JWT.require(Algorithm.HMAC256(SING)).build().verify(token);
     }
-
-
 }

@@ -2,10 +2,44 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.CompetitionStatisticsMapper">
+<mapper namespace="com.example.mapper.ObtainMapper">
 
+    <!-- 查询所有获奖信息 -->
     <select id="findAll" resultType="com.example.entity.Obtain">
-        select * from t_competition_statistics
+        select * from t_obtain
     </select>
+
+    <!--  添加获奖信息  -->
+    <!-- 注意:rank是mysql里的一个函数，所以需要使用`rank`s -->
+    <insert id="addObtain">
+        insert into t_obtain
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentName">student_name,</if>
+            <if test="studentNumber">student_number,</if>
+            <if test="major">major,</if>
+            <if test="cardNumber != null">card_number,</if>
+            <if test="raceName">race_name,</if>
+            <if test="raceScope">race_scope,</if>
+            <if test="rank">`rank`,</if>
+            <if test="adviser">adviser,</if>
+            <if test="teamSituation">team_situation,</if>
+            <if test="grade">grade,</if>
+            <if test="obtainTime">obtain_time</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="studentName">#{studentName},</if>
+            <if test="studentNumber">#{studentNumber},</if>
+            <if test="major">#{major},</if>
+            <if test="cardNumber != null">#{cardNumber},</if>
+            <if test="raceName">#{raceName},</if>
+            <if test="raceScope">#{raceScope},</if>
+            <if test="rank">#{rank},</if>
+            <if test="adviser">#{adviser},</if>
+            <if test="teamSituation">#{teamSituation},</if>
+            <if test="grade">#{grade},</if>
+            <if test="obtainTime">#{obtainTime}</if>
+        </trim>
+    </insert>
+
 
 </mapper>

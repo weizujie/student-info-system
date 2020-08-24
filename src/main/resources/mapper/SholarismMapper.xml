@@ -2,21 +2,27 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.AwardsMapper">
+<mapper namespace="com.example.mapper.SholarismMapper">
 
+    <!-- 根据id查询学术信息 -->
     <select id="findById" resultType="com.example.entity.Scholarism">
-        select * from t_awards where id = #{id}
+        select * from t_scholarism where id = #{id}
     </select>
 
+    <!-- 查询所有学术信息 -->
     <select id="findAll" resultType="com.example.entity.Scholarism">
-        select * from t_awards
+        select * from t_scholarism
     </select>
 
-    <insert id="addAwards">
-        insert into t_awards
+    <!-- 添加学术信息 -->
+    <insert id="addSholarism">
+        insert into t_scholarism
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="resultName">result_name,</if>
             <if test="grade">grade,</if>
+            <if test="major">major,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="patentName != null">patent_name,</if>
             <if test="applicant">applicant,</if>
             <if test="adviser != null">adviser,</if>
             <if test="patentNumber">patent_number,</if>
@@ -27,6 +33,9 @@
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="resultName">#{resultName},</if>
             <if test="grade">#{grade},</if>
+            <if test="major">#{major},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="patentName != null">#{patentName},</if>
             <if test="applicant">#{applicant},</if>
             <if test="adviser != null">#{adviser},</if>
             <if test="patentNumber">#{patentNumber},</if>

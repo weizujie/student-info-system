@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户管理接口
+ *
  * @Author: weizujie
  * @Date: 2020/8/20
  * @Github: https://github.com/weizujie
@@ -26,4 +28,8 @@ public interface IUserService {
     User findById(Integer id);
 
     void updateAvatar(Integer id, String avatar);
+
+    void deleteById(Integer id);
+
+    void updateUser(User user);
 }

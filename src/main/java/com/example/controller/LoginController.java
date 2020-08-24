@@ -14,13 +14,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 用户登录控制器
+ *
  * @Author: weizujie
  * @Date: 2020/8/22
  * @Github: https://github.com/weizujie
  */
 
 @RestController
-@CrossOrigin
 @Slf4j
 @RequestMapping(value = "api/v1")
 public class LoginController {
@@ -41,25 +42,26 @@ public class LoginController {
             User dbUser = userService.login(user);
             // 将当前登录的用户id存入session中，以便后续更改头像使用
             session.setAttribute("currentUserId", dbUser.getId());
-            log.info(String.valueOf(dbUser.getId()));
+            log.info("登录用户的id->" + dbUser.getId());
             payload.put("id", String.valueOf(dbUser.getId()));
             payload.put("username", dbUser.getUsername());
             // 生成JWT令牌
             String token = JWTUtil.getToken(payload);
+            log.info("登录用户的token->" + token);
             // 构造json数据
             data.put("id", String.valueOf(dbUser.getId()));
             data.put("username", dbUser.getUsername());
             data.put("email", dbUser.getEmail());
             data.put("mobile", dbUser.getMobile());
             data.put("token", token);
-            map.put("status", 200);
+            map.put("code", 200);
             map.put("msg", "登录成功");
             result.put("data", data);
             result.put("meta", map);
 
         } catch (Exception e) {
             e.printStackTrace();
-            result.put("status", "0");
+            result.put("code", "0");
             result.put("msg", e.getMessage());
         }
         return result;

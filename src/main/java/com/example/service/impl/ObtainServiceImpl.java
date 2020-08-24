@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 获奖统计实现类
+ *
  * @Author: weizujie
  * @Date: 2020/8/23
  * @Github: https://github.com/weizujie
  */
 
 @Service
-public class ObtainImpl implements IObtainService {
+public class ObtainServiceImpl implements IObtainService {
 
     @Autowired
     private ObtainMapper obtainMapper;

@@ -3,6 +3,8 @@ package com.example.entity;
 import lombok.Data;
 
 /**
+ * 用户实体类
+ *
  * @Author: weizujie
  * @Date: 2020/8/20
  * @Github: https://github.com/weizujie
@@ -20,7 +22,7 @@ public class User {
     private String email;
     // 手机号
     private String mobile;
-    // 头像
+    // 头像地址
     private String avatar;
 
 }

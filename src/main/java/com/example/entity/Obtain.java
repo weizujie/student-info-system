@@ -12,12 +12,12 @@ import java.util.Date;
  * @Github: https://github.com/weizujie
  */
 @Data
-public class CompetitionStatistics {
+public class Obtain {
     private int id;
     // 姓名
     private String studentName;
     // 学号
-    private int studentNumber;
+    private String studentNumber;
     // 专业
     private String major;
     // 银行卡号(选填)
@@ -35,5 +35,5 @@ public class CompetitionStatistics {
     // 年级
     private String grade;
     // 获奖时间
-    private Date time;
+    private Date obtainTime;
 }
