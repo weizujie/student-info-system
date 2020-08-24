@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AwardsMapper">
+
+    <select id="findById" resultType="com.example.entity.Scholarism">
+        select * from t_awards where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.example.entity.Scholarism">
+        select * from t_awards
+    </select>
+
+    <insert id="addAwards">
+        insert into t_awards
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resultName">result_name,</if>
+            <if test="grade">grade,</if>
+            <if test="applicant">applicant,</if>
+            <if test="adviser != null">adviser,</if>
+            <if test="patentNumber">patent_number,</if>
+            <if test="paperNumber">paper_number,</if>
+            <if test="applicationTime != null">application_time,</if>
+            <if test="postedTime != null">posted_time</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="resultName">#{resultName},</if>
+            <if test="grade">#{grade},</if>
+            <if test="applicant">#{applicant},</if>
+            <if test="adviser != null">#{adviser},</if>
+            <if test="patentNumber">#{patentNumber},</if>
+            <if test="paperNumber">#{paperNumber},</if>
+            <if test="applicationTime != null">#{applicationTime},</if>
+            <if test="postedTime != null">#{postedTime}</if>
+        </trim>
+    </insert>
+
+</mapper>
