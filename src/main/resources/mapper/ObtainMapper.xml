@@ -41,5 +41,60 @@
         </trim>
     </insert>
 
+    <select id="findById" resultType="com.example.entity.Obtain">
+        select * from t_obtain where id = #{id}
+    </select>
+
+    <select id="search" resultType="com.example.entity.Obtain">
+        select * from t_obtain where student_name = #{studentName}
+    </select>
+
+    <select id="getData" resultType="java.util.Map">
+        SELECT obtain_time, `rank`, count(*), grade, major FROM t_obtain GROUP BY obtain_time, `rank` ORDER BY obtain_time
+    </select>
+
+    <!-- 根据id更新获奖信息 -->
+    <update id="updateObtain" parameterType="com.example.entity.Obtain">
+        update t_obtain
+        <trim prefix="set" suffixOverrides=",">
+            <if test="studentName != null">student_name = #{studentName},</if>
+            <if test="studentNumber != null">student_number = #{studentNumber},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="cardNumber != null">card_number = #{cardNumber},</if>
+            <if test="raceName != null">race_name = #{raceName},</if>
+            <if test="raceScope != null">race_scope = #{raceScope},</if>
+            <if test="rank != null">`rank` = #{rank},</if>
+            <if test="adviser != null">adviser = #{adviser},</if>
+            <if test="teamSituation != null">team_situation = #{teamSituation},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="obtainTime != null">obtain_time = #{obtainTime}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id删除获奖信息 -->
+    <delete id="deleteById">
+         delete from t_obtain where id = #{id}
+    </delete>
+
+
+    <insert id="saveAll" parameterType="java.util.List">
+        insert into t_obtain (student_name,student_number,major,card_number,race_name,race_scope,`rank`,adviser,team_situation,grade,obtain_time)
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.studentName},
+                #{item.studentNumber},
+                #{item.major},
+                #{item.cardNumber},
+                #{item.raceName},
+                #{item.raceScope},
+                #{item.rank},
+                #{item.adviser},
+                #{item.teamSituation},
+                #{item.grade},
+                #{item.obtainTime}
+            )
+        </foreach>
+    </insert>
 
 </mapper>

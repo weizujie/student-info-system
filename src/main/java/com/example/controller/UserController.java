@@ -6,20 +6,16 @@ import com.example.utils.JWTUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Update;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.nio.cs.US_ASCII;
 
-import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理控制器
@@ -59,7 +55,6 @@ public class UserController {
         // 验证 token
         String token = request.getHeader("token");
         JWTUtil.verify(token);
-        log.info("请求users的token->" + token);
         // 构造 json 数据
         map.put("total", pageInfo.getTotal());
         map.put("pagenum", pageInfo.getPageNum());
@@ -163,13 +158,11 @@ public class UserController {
     public Map<String, Object> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
         Map<String, Object> result = new LinkedHashMap<>();
         Map<String, Object> meta = new LinkedHashMap<>();
-        Map<String, Object> data = new LinkedHashMap<>();
         try {
             user.setId(id);
             userService.updateUser(user);
             meta.put("code", 200);
             meta.put("msg", "更新成功");
-            result.put("data", data);
             result.put("meta", meta);
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,7 +179,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/updateAvatar")
-    public Map<String, Object> updateAvatar(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public Map<String, Object> updateAvatar(@RequestParam(value = "avatar", required = false) MultipartFile file, HttpServletRequest request) {
         Map<String, Object> map = new LinkedHashMap<>();
         if (file.isEmpty()) {
             map.put("code", 400);

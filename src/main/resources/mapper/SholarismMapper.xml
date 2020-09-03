@@ -15,34 +15,81 @@
     </select>
 
     <!-- 添加学术信息 -->
-    <insert id="addSholarism">
+    <insert id="addScholarism">
         insert into t_scholarism
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="resultName">result_name,</if>
             <if test="grade">grade,</if>
             <if test="major">major,</if>
+            <if test="studentNumber">student_number,</if>
+            <if test="periodical != null">periodical,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="firstAuthor">first_author,</if>
+            <if test="correspondingAuthor">corresponding_author,</if>
             <if test="paperName != null">paper_name,</if>
             <if test="patentName != null">patent_name,</if>
             <if test="applicant">applicant,</if>
             <if test="adviser != null">adviser,</if>
             <if test="patentNumber">patent_number,</if>
             <if test="paperNumber">paper_number,</if>
-            <if test="applicationTime != null">application_time,</if>
+            <if test="applicationTime">application_time,</if>
             <if test="postedTime != null">posted_time</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="resultName">#{resultName},</if>
             <if test="grade">#{grade},</if>
             <if test="major">#{major},</if>
+            <if test="studentNumber">#{studentNumber},</if>
+            <if test="periodical != null">#{periodical},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="firstAuthor">#{firstAuthor},</if>
+            <if test="correspondingAuthor">#{correspondingAuthor},</if>
             <if test="paperName != null">#{paperName},</if>
             <if test="patentName != null">#{patentName},</if>
             <if test="applicant">#{applicant},</if>
             <if test="adviser != null">#{adviser},</if>
             <if test="patentNumber">#{patentNumber},</if>
             <if test="paperNumber">#{paperNumber},</if>
-            <if test="applicationTime != null">#{applicationTime},</if>
+            <if test="applicationTime">#{applicationTime},</if>
             <if test="postedTime != null">#{postedTime}</if>
         </trim>
     </insert>
+
+    <!-- 搜索框搜索 -->
+    <select id="search" resultType="com.example.entity.Scholarism">
+        select * from t_scholarism where applicant = #{applicant}
+    </select>
+
+    <select id="getData" resultType="java.util.Map">
+        SELECT posted_time, result_name, count( * ), major, grade FROM t_scholarism GROUP BY result_name, posted_time ORDER BY posted_time
+    </select>
+
+    <!-- 根据id更新学术信息 -->
+    <update id="updateScholarism" parameterType="com.example.entity.Scholarism">
+        update t_scholarism
+        <trim prefix="set" suffixOverrides=",">
+            <if test="resultName != null">result_name = #{resultName},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="studentNumber != null">student_number = #{studentNumber},</if>
+            <if test="periodical != null">periodical = #{periodical},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="firstAuthor">first_author = #{firstAuthor},</if>
+            <if test="correspondingAuthor">corresponding_author = #{correspondingAuthor},</if>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="patentName != null">patent_name = #{patentName},</if>
+            <if test="applicant != null">applicant = #{applicant},</if>
+            <if test="adviser != null">adviser = #{adviser},</if>
+            <if test="patentNumber != null">patent_number = #{patentNumber},</if>
+            <if test="paperNumber != null">paper_number = #{paperNumber},</if>
+            <if test="applicationTime != null">application_time = #{applicationTime},</if>
+            <if test="postedTime != null">posted_time = #{postedTime}</if>
+        </trim>
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteById">
+        delete from t_scholarism where id = #{id}
+    </delete>
 
 </mapper>

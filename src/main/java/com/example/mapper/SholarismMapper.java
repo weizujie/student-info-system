@@ -16,8 +16,16 @@ public interface SholarismMapper {
 
     Scholarism findById(@Param("id") int id);
 
-    void addSholarism(Scholarism scholarism);
+    void addScholarism(Scholarism scholarism);
 
     List<Scholarism> findAll();
+
+    List<Scholarism> getData();
+
+    List<Scholarism> search(@Param("applicant") String applicant);
+
+    void updateScholarism(Scholarism scholarism);
+
+    void deleteById(Integer id);
 
 }

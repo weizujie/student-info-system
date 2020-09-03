@@ -42,12 +42,10 @@ public class LoginController {
             User dbUser = userService.login(user);
             // 将当前登录的用户id存入session中，以便后续更改头像使用
             session.setAttribute("currentUserId", dbUser.getId());
-            log.info("登录用户的id->" + dbUser.getId());
             payload.put("id", String.valueOf(dbUser.getId()));
             payload.put("username", dbUser.getUsername());
             // 生成JWT令牌
             String token = JWTUtil.getToken(payload);
-            log.info("登录用户的token->" + token);
             // 构造json数据
             data.put("id", String.valueOf(dbUser.getId()));
             data.put("username", dbUser.getUsername());

@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Obtain;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,5 +17,15 @@ public interface IObtainService {
 
     void addObtain(Obtain obtain);
 
+    Obtain findById(Integer id);
 
+    List<Obtain> search(String studentName);
+
+    List<Obtain> getData();
+
+    void updateObtain(Obtain obtain);
+
+    void deleteById(Integer id);
+
+    void saveAll(List<Obtain> obtain);
 }

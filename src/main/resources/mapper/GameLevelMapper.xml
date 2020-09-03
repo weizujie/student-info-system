@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GameLevelMapper">
+
+    <!-- 查询所有赛事级别 -->
+    <select id="findAll" resultType="com.example.entity.GameLevel">
+        select * from t_gamelevel
+    </select>
+
+    <insert id="addGameLevel">
+        insert into t_gamelevel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="levelName">level_name,</if>
+            <if test="comment != null">comment</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="levelName">#{levelName},</if>
+            <if test="comment != null">#{comment}</if>
+        </trim>
+    </insert>
+
+    <select id="findById" resultType="com.example.entity.GameLevel">
+        select * from t_gamelevel where id = #{id}
+    </select>
+
+    <update id="updateGameLevel" parameterType="com.example.entity.GameLevel">
+        update t_gamelevel
+        <trim prefix="set" suffixOverrides=",">
+            <if test="levelName != null">level_name = #{levelName},</if>
+            <if test="comment != null">comment = #{comment}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id删除赛事级别 -->
+    <delete id="deleteById">
+         delete from t_gamelevel where id = #{id}
+    </delete>
+
+</mapper>
