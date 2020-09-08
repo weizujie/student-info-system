@@ -33,7 +33,7 @@ public class LoginController {
      * 用户登录
      */
     @PostMapping(value = "/login")
-    public Map<String, Object> login(@RequestBody User user, HttpSession session) {
+    public Map<String, Object> login(@RequestBody User user, HttpSession session, HttpServletRequest request) {
         Map<String, String> payload = new LinkedHashMap<>(); // 用于存放payload
         Map<String, Object> result = new LinkedHashMap<>();
         Map<String, Object> map = new LinkedHashMap<>();
@@ -42,6 +42,8 @@ public class LoginController {
             User dbUser = userService.login(user);
             // 将当前登录的用户id存入session中，以便后续更改头像使用
             session.setAttribute("currentUserId", dbUser.getId());
+            Integer currentUserId = Integer.valueOf(request.getSession().getAttribute("currentUserId").toString());
+            log.info("登录用户的id：" + currentUserId);
             payload.put("id", String.valueOf(dbUser.getId()));
             payload.put("username", dbUser.getUsername());
             // 生成JWT令牌
@@ -59,7 +61,7 @@ public class LoginController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            result.put("code", "0");
+            result.put("code", "500");
             result.put("msg", e.getMessage());
         }
         return result;
@@ -74,9 +76,11 @@ public class LoginController {
     @GetMapping(value = "/logout")
     public Map<String, Object> login(HttpSession session) {
         Map<String, Object> result = new LinkedHashMap<>();
+        Map<String, Object> meta = new LinkedHashMap<>();
         session.invalidate();
-        result.put("code", 200);
-        result.put("msg", "退出成功");
+        meta.put("code", 200);
+        meta.put("msg", "退出成功");
+        result.put("meta", meta);
         return result;
     }
 

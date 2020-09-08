@@ -19,15 +19,11 @@ public class ObtainListener extends AnalysisEventListener<Obtain> {
 
 
     private List<Obtain> list = new ArrayList<>();
-    /**
-     * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
-     */
+    // 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
     private static final int BATCH_COUNT = 5;
 
 
-    /**
-     * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
-     */
+    // 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
     public ObtainListener(IObtainService obtainService) {
         this.obtainService = obtainService;
     }

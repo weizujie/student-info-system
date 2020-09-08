@@ -199,17 +199,22 @@ public class ObtainController {
     /**
      * 上传 Excel 文件
      *
-     * @param excelFile
+     * @param excel
      * @return
      */
     @PostMapping(value = "/obtain/importExcel")
-    public Map<String, Object> importExcel(@RequestParam("excel") MultipartFile excelFile) {
+    public Map<String, Object> importExcel(MultipartFile excel) {
         Map<String, Object> result = new LinkedHashMap<>();
         Map<String, Object> meta = new LinkedHashMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
+
         try {
-            EasyExcel.read(excelFile.getInputStream(), Obtain.class, new ObtainListener(obtainService)).sheet().doRead();
+            // EasyExcel.read(excel.getInputStream(), Obtain.class, new ObtainListener(obtainService)).sheet().doRead();
+            List<Object> obtain = EasyExcel.read(excel.getInputStream(), Obtain.class, new ObtainListener((obtainService))).sheet().doReadSync();
+            data.put("obtain", obtain);
             meta.put("code", 200);
             meta.put("msg", "上传成功");
+            result.put("data", data);
             result.put("meta", meta);
         } catch (Exception e) {
             e.printStackTrace();

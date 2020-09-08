@@ -29,14 +29,17 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 // 拦截以下接口
                 .addPathPatterns("/**")
                 // 不拦截以下接口
+                .excludePathPatterns("/*")
                 .excludePathPatterns("/api/v1/login")
                 .excludePathPatterns("/api/v1/obtain")
                 .excludePathPatterns("/api/v1/scholarism")
                 .excludePathPatterns("/api/v1/gameLevel")
                 .excludePathPatterns("/api/v1/raceName")
                 .excludePathPatterns("/api/v1/raceScope")
-                .excludePathPatterns("/api/v1/obtain/exportExcel")
-                .excludePathPatterns("/api/v1//scholarism/exportExcel")
+//                .excludePathPatterns("/api/v1/obtain/exportExcel")
+//                .excludePathPatterns("/api/v1/obtain/importExcel")
+//                .excludePathPatterns("/api/v1/scholarism/importExcel")
+//                .excludePathPatterns("/api/v1//scholarism/exportExcel")
                 .excludePathPatterns("/static/images/**");
         WebMvcConfigurer.super.addInterceptors(registry);
     }

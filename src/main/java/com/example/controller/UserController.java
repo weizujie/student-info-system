@@ -175,20 +175,21 @@ public class UserController {
     /**
      * 更新当前登录用户的头像
      *
-     * @param file
+     * @param avatar
      * @return
      */
     @PostMapping(value = "/updateAvatar")
-    public Map<String, Object> updateAvatar(@RequestParam(value = "avatar", required = false) MultipartFile file, HttpServletRequest request) {
-        Map<String, Object> map = new LinkedHashMap<>();
-        if (file.isEmpty()) {
-            map.put("code", 400);
-            map.put("msg", "请选择上传文件");
-            return map;
+    public Map<String, Object> updateAvatar(MultipartFile avatar, HttpServletRequest request) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        Map<String, Object> meta = new LinkedHashMap<>();
+        if (avatar.isEmpty()) {
+            result.put("code", 400);
+            result.put("msg", "请选择上传文件");
+            return result;
         }
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
-        String originalFilename = file.getOriginalFilename();
+        String originalFilename = avatar.getOriginalFilename();
         String fileName = System.currentTimeMillis() + "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String filePath = uploadFolder;
         File dest = new File(filePath + fileName);
@@ -196,25 +197,26 @@ public class UserController {
             dest.getParentFile().mkdirs();
         }
         try {
-            file.transferTo(dest);
             // 获取当前登录用户
             Integer currentUserId = Integer.valueOf(request.getSession().getAttribute("currentUserId").toString());
-            log.info("currentUserId" + currentUserId);
+            log.info("更新头像用户的id：" + currentUserId);
             // 根据id查询用户
-            User result = userService.findById(currentUserId);
+            User dbUser = userService.findById(currentUserId);
             // 更新头像
-            String avatar = basePath + "/static/images/" + fileName;
-            userService.updateAvatar(result.getId(), avatar);
-            map.put("code", 200);
-            map.put("msg", "上传成功");
-            map.put("path", basePath + "/static/images/" + fileName); // 上传的头像地址
+            avatar.transferTo(dest);
+            String avatarUrl = basePath + "/static/images/" + fileName;
+            userService.updateAvatar(dbUser.getId(), avatarUrl);
+            // 构造 json 数据
+            meta.put("code", 200);
+            meta.put("msg", "上传成功");
+            meta.put("path", basePath + "/static/images/" + fileName); // 上传的头像地址
+            result.put("meta", meta);
         } catch (Exception e) {
             e.printStackTrace();
-            map.put("code", 500);
-            map.put("msg", "上传失败");
-            return map;
+            result.put("code", 500);
+            result.put("msg", "上传失败");
         }
-        return map;
+        return result;
     }
 
 }

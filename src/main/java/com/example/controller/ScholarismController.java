@@ -197,10 +197,13 @@ public class ScholarismController {
     public Map<String, Object> importExcel(@RequestParam("excel") MultipartFile excelFile) {
         Map<String, Object> result = new LinkedHashMap<>();
         Map<String, Object> meta = new LinkedHashMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
         try {
-            EasyExcel.read(excelFile.getInputStream(), Scholarism.class, new ScholarismListener(sholarismService)).sheet().doRead();
+            List<Object> scholarism = EasyExcel.read(excelFile.getInputStream(), Scholarism.class, new ScholarismListener(sholarismService)).sheet().doReadSync();
+            data.put("scholarism", scholarism);
             meta.put("code", 200);
             meta.put("msg", "上传成功");
+            result.put("data", data);
             result.put("meta", meta);
         } catch (Exception e) {
             e.printStackTrace();
