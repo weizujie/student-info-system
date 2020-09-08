@@ -27,6 +27,13 @@
         </dependency>
 
 
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
         <!-- easy-excel -->
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -29,6 +29,11 @@ public class LoginController {
     @Autowired
     private IUserService userService;
 
+    @GetMapping(value = "/login")
+    public String login() {
+        return ":)";
+    }
+
     /**
      * 用户登录
      */
@@ -64,23 +69,6 @@ public class LoginController {
             result.put("code", "500");
             result.put("msg", e.getMessage());
         }
-        return result;
-    }
-
-    /**
-     * 退出登录
-     *
-     * @param session
-     * @return
-     */
-    @GetMapping(value = "/logout")
-    public Map<String, Object> login(HttpSession session) {
-        Map<String, Object> result = new LinkedHashMap<>();
-        Map<String, Object> meta = new LinkedHashMap<>();
-        session.invalidate();
-        meta.put("code", 200);
-        meta.put("msg", "退出成功");
-        result.put("meta", meta);
         return result;
     }
 
