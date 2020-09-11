@@ -1,3 +1,5 @@
+ssl-server.jks
+.gitignore
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

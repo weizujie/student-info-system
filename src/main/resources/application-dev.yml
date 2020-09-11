@@ -1,12 +1,16 @@
 server:
   port: 8888
+  ssl:
+    key-password: 0cpr6fjS
+    key-store: classpath:ssl-server.jks
+    key-store-type: JKS
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/stuinfosys?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: toor
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource
 
     # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
