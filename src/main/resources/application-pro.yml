@@ -28,7 +28,7 @@ mybatis:
 
 file:
   staticAccessPath: /static/images/**
-  uploadFolder: D:/Code/JavaProjects/stuinfosys/uploadFiles/
+  uploadFolder: /static/uploadFiles/**
 
 
 
