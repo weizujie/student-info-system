@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>stuinfosys</artifactId>
+    <artifactId>StuInfo-Collection</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>stuinfosys</name>
+    <name>StuInfo-Collection</name>
     <description>电子系年度学生信息采集系统</description>
     <packaging>jar</packaging>
 
