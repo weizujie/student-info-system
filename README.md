@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://github.com/weizujie/StuInfoSys" target="_blank">StuInfoSys</a></h1>
+<h1 align="center"><a href="https://github.com/weizujie/StuInfoSys" target="_blank">StuInfo-Collection</a></h1>
 
 > :nerd_face: 电子系年度学生成果信息采集系统。
 
