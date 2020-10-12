@@ -2,6 +2,7 @@ package com.example.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

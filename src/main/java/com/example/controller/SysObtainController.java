@@ -143,7 +143,7 @@ public class SysObtainController {
      *
      * @return
      */
-    // @RequiresPermissions("sys:obtain:export")
+    @RequiresPermissions("sys:obtain:export")
     @GetMapping(value = "/exportObtainExcel")
     public void exportObtainExcel(HttpServletResponse response) throws IOException {
         List<SysObtain> obtains = sysObtainService.findAll();

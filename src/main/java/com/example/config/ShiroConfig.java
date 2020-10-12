@@ -47,10 +47,10 @@ public class ShiroConfig {
 
         // 无需认证
         filterMap.put("/anno/login", "anon");
-        filterMap.put("/sys/exportScholarismExcel", "anon");
-        filterMap.put("/sys/importScholarismExcel", "anon");
-        filterMap.put("/sys/exportObtainExcel", "anon");
-        filterMap.put("/sys/importObtainExcel", "anon");
+        // filterMap.put("/sys/exportScholarismExcel", "anon");
+        // filterMap.put("/sys/importScholarismExcel", "anon");
+        //  filterMap.put("/sys/exportObtainExcel", "anon");
+        // filterMap.put("/sys/importObtainExcel", "anon");
 
         // 需要认证
         // filterMap.put("/sys/**", "authc");
