@@ -1,4 +1,4 @@
-# server:
+server:
   # port: 8888
   # HTTPS 配置
 #  ssl:
@@ -24,7 +24,12 @@ spring:
       # 自动更新
       ddl-auto: update
     # 显示 SQL 语句
-    show-sql: false
+    show-sql: true
+
+  #设置开启热部署
+  devtools:
+    restart:
+      enabled: true
 
 
 file:
