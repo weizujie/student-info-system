@@ -35,7 +35,6 @@ public class SysObtainServiceImpl implements SysObtainService {
     @Override
     public R saveObtain(SysObtain sysObtain) {
         SysObtain sysObtainSave = sysObtainRepository.save(sysObtain);
-        log.info("获奖保存：sysObtainSave = {}" + sysObtainSave);
         return RUtil.success(sysObtainSave);
     }
 
@@ -68,5 +67,10 @@ public class SysObtainServiceImpl implements SysObtainService {
     public R selectObtainDetail(Integer id) {
         SysObtain sysObtainById = sysObtainRepository.findOne(id);
         return RUtil.success(sysObtainById);
+    }
+
+    @Override
+    public List<SysObtain> findAll() {
+        return sysObtainRepository.findAll();
     }
 }

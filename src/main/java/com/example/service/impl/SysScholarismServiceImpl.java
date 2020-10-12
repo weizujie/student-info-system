@@ -1,6 +1,5 @@
 package com.example.service.impl;
 
-import com.example.model.SysObtain;
 import com.example.model.SysScholarism;
 import com.example.repository.SysScholarismRepository;
 import com.example.service.SysScholarismService;
@@ -37,7 +36,6 @@ public class SysScholarismServiceImpl implements SysScholarismService {
     @Override
     public R saveScholarism(SysScholarism sysScholarism) {
         SysScholarism sysScholarismSave = sysScholarismRepository.save(sysScholarism);
-        log.info("学术保存：sysScholarismSave = {}" + sysScholarismSave);
         return RUtil.success(sysScholarismSave);
     }
 
@@ -70,5 +68,10 @@ public class SysScholarismServiceImpl implements SysScholarismService {
     public R selectScholarismDetail(Integer id) {
         SysScholarism sysScholarismById = sysScholarismRepository.findOne(id);
         return RUtil.success(sysScholarismById);
+    }
+
+    @Override
+    public List<SysScholarism> findAll() {
+        return sysScholarismRepository.findAll();
     }
 }

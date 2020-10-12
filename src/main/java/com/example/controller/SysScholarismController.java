@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.example.enums.REnum;
 import com.example.exception.SystemException;
+import com.example.listener.ScholarismListener;
 import com.example.model.SysScholarism;
 import com.example.service.SysScholarismService;
 import com.example.utils.Assert;
+import com.example.utils.RUtil;
 import com.example.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 学术统计
@@ -120,5 +127,47 @@ public class SysScholarismController {
         return sysScholarismService.deleteScholarism(id);
     }
 
+    /**
+     * 导入 Excel 文件
+     *
+     * @param excelFile
+     * @return
+     * @throws IOException
+     */
+    @RequiresPermissions("sys:scholarism:import")
+    @PostMapping(value = "/importScholarismExcel")
+    public R importScholarism(@RequestParam(value = "excel", required = false) MultipartFile excelFile) throws IOException {
+        /*
+         * 调用的是 Repository 的 save 方法，如果 excel 里填了 id 并且与数据库中的一致，则会更新该条数据，而不是追加
+         * 所以导入 excel 的时候需要把 id 去掉
+         */
+        List<Object> sysScholarismList = EasyExcel.read(excelFile.getInputStream(), SysScholarism.class, new ScholarismListener(sysScholarismService)).sheet().doReadSync();
+        return RUtil.success(sysScholarismList);
+    }
+
+
+    /**
+     * 下载 Excel 文件
+     *
+     * @param response
+     * @throws IOException
+     */
+    @RequiresPermissions("sys:scholarism:export")
+    @GetMapping(value = "/exportScholarismExcel")
+    public void exportScholarism(HttpServletResponse response) throws IOException {
+        List<SysScholarism> scholarisms = sysScholarismService.findAll();
+        String fileName = "ScholarismExcel";
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        try {
+            EasyExcel.write(response.getOutputStream(), SysScholarism.class).sheet("Scholarism").doWrite(scholarisms);
+            log.info("下载ScholarismExcel.xlsx文件成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
 
 }

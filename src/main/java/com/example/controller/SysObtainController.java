@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.example.enums.REnum;
 import com.example.exception.SystemException;
+import com.example.listener.ObtainListener;
 import com.example.model.SysObtain;
 import com.example.service.SysObtainService;
 import com.example.utils.Assert;
+import com.example.utils.RUtil;
 import com.example.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 获奖统计
@@ -115,6 +122,43 @@ public class SysObtainController {
     @DeleteMapping("/deleteObtain/{id}")
     public R deleteObtain(@PathVariable Integer id) {
         return sysObtainService.deleteObtain(id);
+    }
+
+
+    /**
+     * 导入 Excel 文件
+     *
+     * @param excel
+     * @return
+     */
+    @RequiresPermissions("sys:obtain:import")
+    @PostMapping(value = "/importObtainExcel")
+    public R importObtainExcel(@RequestParam(value = "excel", required = false) MultipartFile excel) throws IOException {
+        List<Object> sysObtainList = EasyExcel.read(excel.getInputStream(), SysObtain.class, new ObtainListener((sysObtainService))).sheet().doReadSync();
+        return RUtil.success(sysObtainList);
+    }
+
+    /**
+     * 导出 Excel 文件
+     *
+     * @return
+     */
+    // @RequiresPermissions("sys:obtain:export")
+    @GetMapping(value = "/exportObtainExcel")
+    public void exportObtainExcel(HttpServletResponse response) throws IOException {
+        List<SysObtain> obtains = sysObtainService.findAll();
+        String fileName = "ObtainExcel";
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        try {
+            EasyExcel.write(response.getOutputStream(), SysObtain.class).sheet("Obtain").doWrite(obtains);
+            log.info("下载 ObtainExcel.xlsx 文件成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
 
 

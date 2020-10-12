@@ -43,18 +43,21 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/api/v1/notLogin");
-        shiroFilter.setUnauthorizedUrl("/");
-
         Map<String, String> filterMap = new LinkedHashMap<>();
-        // 需要认证
-        filterMap.put("/sys/**", "authc");
+
         // 无需认证
-        filterMap.put("/anno/**", "anon");
+        filterMap.put("/anno/login", "anon");
+        filterMap.put("/sys/exportScholarismExcel", "anon");
+        filterMap.put("/sys/importScholarismExcel", "anon");
+        filterMap.put("/sys/exportObtainExcel", "anon");
+        filterMap.put("/sys/importObtainExcel", "anon");
 
-        
+        // 需要认证
+        // filterMap.put("/sys/**", "authc");
+
+        // 拦截所有请求，一般放最后面
+        filterMap.put("/**", "authc");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
-
         return shiroFilter;
     }
 
